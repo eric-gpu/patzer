@@ -4,6 +4,19 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Connecting the AI coach from Docker.** The setup wizard rejected
+  `http://host.docker.internal:11434` — the very address the README
+  recommends — as `invalid_url`, and a failed test only said "unreachable" or
+  "fetch failed". Now that address is accepted, and a failed test in the setup
+  wizard and *Admin → System* explains the usual cause: inside Docker
+  `localhost` is the container itself, and Ollama has to listen on the network
+  (`OLLAMA_HOST=0.0.0.0`). `docker-compose.yml` has an opt-in (commented-out)
+  line that maps `host.docker.internal` on Linux too, and the README
+  troubleshooting entry spells out both steps. (#37)
+
 ## [7.15.0] — 2026-09-26
 
 ### German, Lichess, invites, an opening trainer — and two new contributors
